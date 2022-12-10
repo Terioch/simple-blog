@@ -24,9 +24,9 @@ namespace SimpleBlog.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetPost(int id)
+        public IActionResult GetPost([FromRoute] int id)
         {
-            var post = posts.FirstOrDefault(x => x.Id == id);
+            var post = posts.FirstOrDefault(x => x.Id == id);            
             return Ok(post);
         }
     }

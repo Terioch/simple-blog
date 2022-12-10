@@ -14,19 +14,32 @@
     <main class="main">
       <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="/home/home.html">DemoSimpleBlog</a>
-          <button class="btn btn-primary">Login</button>
+          <a class="navbar-brand" href="/home.html">DemoSimpleBlog</a>
+          <div class="d-flex align-items-center">
+            <button class="btn btn-primary me-3">Login</button>
+            <div class="input-group">
+              <span class="input-group-text" id="basic-addon1">@</span>
+              <input
+                type="text"
+                id="postSearch"
+                class="form-control"
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+          </div>
         </div>
-      </nav>  
+      </nav>
 
       <div class="container text-center mt-5">
-        <div id="postsContainer" class="row">         
+        <div id="postsContainer" class="row">
           <!-- Posts html added in JS file -->
         </div>
       </div>
     </main>
 
-    <script src="home.js"></script>
+    <script src="./components/home.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
