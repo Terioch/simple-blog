@@ -5,7 +5,7 @@ class Home {
 
   async onInit() {
     document
-      .getElementById("postSearch")
+      .getElementById("searchInput")
       .addEventListener("change", this.searchPosts.bind(this));
 
     const posts = await this.getPosts();
@@ -23,7 +23,7 @@ class Home {
     const container = document.getElementById("postsContainer");
 
     for (const post of posts) {
-      const html = `<a href="/post.html?id=${post.id}" class="col col-md-3 border p-3">
+      const html = `<a href="/post.php?id=${post.id}" class="col col-md-3 border p-3">
         <h2>${post.title}</h2>
         <p>${post.excerpt}</p>
       </a>`;

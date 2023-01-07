@@ -18,10 +18,17 @@ namespace SimpleBlog.Controllers
         };
 
         [HttpGet] 
-        public IActionResult GetPosts()
+        public IActionResult GetPosts([FromQuery] string? searchTerm)
         {
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                var filteredPosts = posts.Where(x => 
+                    x.Title.ToLower().Contains(searchTerm.ToLower()));
+                return Ok(filteredPosts);
+            }
+
             return Ok(posts);
-        }
+        }        
 
         [HttpGet("{id}")]
         public IActionResult GetPost([FromRoute] int id)

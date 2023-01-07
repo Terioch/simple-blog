@@ -15,5 +15,5 @@
         public DateTime Updated { get; set; }
 
         public DateTime Deleted { get; set; }
-    }
+    }   
 }

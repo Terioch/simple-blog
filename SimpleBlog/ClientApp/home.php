@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Post Page</title>
+    <title>Homepage</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -12,21 +12,16 @@
   </head>
   <body>
     <main class="main">
-      <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/home.html">DemoSimpleBlog</a>
-          <button class="btn btn-primary">Login</button>
-        </div>
-      </nav>
+      <?php include('./shared/navigation.php') ?>
 
       <div class="container text-center mt-5">
-        <div id="postContainer">
-          <!-- Post html added in JS file -->
+        <div id="postsContainer" class="row">
+          <!-- Posts html added in JS file -->
         </div>
       </div>
     </main>
 
-    <script src="./components/post.js"></script>
+    <script src="./components/home.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
