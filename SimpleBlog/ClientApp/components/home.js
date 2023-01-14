@@ -4,10 +4,6 @@ class Home {
   }
 
   async onInit() {
-    document
-      .getElementById("searchInput")
-      .addEventListener("change", this.searchPosts.bind(this));
-
     const posts = await this.getPosts();
     this.setPostContent(posts);
   }
@@ -30,10 +26,6 @@ class Home {
 
       container.insertAdjacentHTML("beforeend", html);
     }
-  }
-
-  searchPosts(event) {
-    console.log(event.target.value);
   }
 }
 

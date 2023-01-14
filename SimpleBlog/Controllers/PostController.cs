@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Web.Resource;
 using SimpleBlog.models;
+using SimpleBlog.Repositories;
+using SimpleBlog.Services;
 
 namespace SimpleBlog.Controllers
 {
@@ -8,32 +9,31 @@ namespace SimpleBlog.Controllers
     [Route("[controller]")]
     public class PostController : ControllerBase
     {
-        private static List<Post> posts = new List<Post>()
+        private readonly IPostService _postService;
+
+        public PostController(IPostService postService)
         {
-            new Post { Id = 1, Title = "First Post", Excerpt = "This is my first post" },
-            new Post { Id = 2, Title = "Second Post", Excerpt = "This is my second post" },
-            new Post { Id = 3, Title = "Third Post", Excerpt = "This is my third post" },
-            new Post { Id = 4, Title = "Fourth Post", Excerpt = "This is my fourth post" },
-            new Post { Id = 5, Title = "Fifth Post", Excerpt = "This is my fifth post" },
-        };
+            _postService = postService;
+        }        
 
         [HttpGet] 
-        public IActionResult GetPosts([FromQuery] string? searchTerm)
+        public IActionResult GetPosts([FromQuery] string? searchTerm = null)
         {
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                var filteredPosts = posts.Where(x => 
-                    x.Title.ToLower().Contains(searchTerm.ToLower()));
-                return Ok(filteredPosts);
-            }
-
+            var posts = _postService.GetPosts(searchTerm);            
             return Ok(posts);
         }        
 
         [HttpGet("{id}")]
-        public IActionResult GetPost([FromRoute] int id)
+        public async Task<IActionResult> GetPost([FromRoute] int id)
         {
-            var post = posts.FirstOrDefault(x => x.Id == id);            
+            var post = await _postService.GetPost(id);           
+            return Ok(post);
+        }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> NewPost([FromBody] Post model)
+        {
+            var post = await _postService.NewPost(model);
             return Ok(post);
         }
     }

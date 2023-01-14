@@ -12,12 +12,7 @@ class Navigation {
 
   async searchPosts(e) {
     e.preventDefault();
-    console.log(e.target, e.target["searchInput"].value);
-    const response = await fetch(
-      `https://localhost:7256/post?searchTerm=${e.target["searchInput"].value}`
-    );
-    const filteredPosts = await response.json();
-    console.log(filteredPosts);
+    window.location.href = `/postSearch.php?search=${e.target["searchInput"].value}`;
   }
 }
 
