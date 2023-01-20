@@ -11,7 +11,7 @@ class Post {
   }
 
   async getPost(id) {
-    const response = await fetch(`https://localhost:7256/post/${id}`);
+    const response = await fetch(`https://localhost:7133/api/post/${id}`);
     console.log(response);
     const post = await response.json();
     return post;

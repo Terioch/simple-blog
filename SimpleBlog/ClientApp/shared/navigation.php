@@ -19,10 +19,66 @@
                         <input id="searchInput" type="text" class="form-control" placeholder="Search" aria-label="Search">
                     </div>                      
                 </form>                              
-                <button class="btn btn-primary">Login</button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
             </div>
         </div>
     </nav>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">@</span>
+              <input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">@</span>
+              <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+            </div>
+            <a href="" class="link" data-bs-toggle="modal" data-bs-target="#registerModal">Create a new account here</a>
+          </div>
+          <div class="modal-footer">
+            <button id="loginBtn" type="button" class="btn btn-primary">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="registerForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="registerModalLabel">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input id="registerUserNameInput" type="text" class="form-control" placeholder="Username" aria-label="UserName">
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input id="registerEmailInput" type="text" class="form-control" placeholder="Email" aria-label="Email">
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input id="registerPasswordInput" type="password" class="form-control" placeholder="Password" aria-label="Password">
+              </div>
+              <a href="" class="link" data-bs-toggle="modal" data-bs-target="#loginModal">Login with an existing account here</a>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+          </form>          
+        </div>
+      </div>
+    </div>
 
     <script src="../components/shared/navigation.js"></script>
   </body>

@@ -12,7 +12,7 @@ class PostSearch {
 
   async getPostsBySearchTerm(searchTerm) {
     const response = await fetch(
-      `https://localhost:7256/post?searchTerm=${searchTerm}`
+      `https://localhost:7133/api/post?searchTerm=${searchTerm}`
     );
     const filteredPosts = await response.json();
     return filteredPosts;

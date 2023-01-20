@@ -9,7 +9,7 @@ class Home {
   }
 
   async getPosts() {
-    const response = await fetch("https://localhost:7256/post");
+    const response = await fetch("https://localhost:7133/api/post");
     const posts = await response.json();
     console.log(posts);
     return posts;
