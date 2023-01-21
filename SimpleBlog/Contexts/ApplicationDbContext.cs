@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SimpleBlog.models;
-using SimpleBlog.Models;
+using SimpleBlog.Entities;
 
 namespace SimpleBlog.Contexts
 {

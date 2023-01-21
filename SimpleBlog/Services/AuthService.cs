@@ -1,4 +1,5 @@
 ﻿using SimpleBlog.Dtos;
+using SimpleBlog.Entities;
 using SimpleBlog.Models;
 using SimpleBlog.Repositories;
 using System.Security.Cryptography;
@@ -15,7 +16,7 @@ namespace SimpleBlog.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<User> NewUser(UserDto userDto)
+        public async Task<ActionWrapper<UserDto>> NewUser(UserDto userDto)
         {
             (byte[] passwordSalt, byte[] passwordHash) = GeneratePasswordHash(userDto.Password);
 
@@ -31,10 +32,10 @@ namespace SimpleBlog.Services
 
             await _unitOfWork.Complete();
 
-            return user;
+            return new ActionWrapper<UserDto>().Success("Registration was successful", userDto);
         }
 
-        private (byte[], byte[]) GeneratePasswordHash(string password)
+        private static (byte[], byte[]) GeneratePasswordHash(string password)
         {
             var hmac = new HMACSHA512();
 
@@ -43,6 +44,32 @@ namespace SimpleBlog.Services
             byte[] passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
             return (passwordSalt, passwordHash);
+        }
+
+        public ActionWrapper<UserDto> AuthenticateUser(UserDto userDto)
+        {
+            var user = _unitOfWork.Users.GetAll(x => x.Email == userDto.Email).FirstOrDefault();
+
+            if (user == null)
+            {
+                return new ActionWrapper<UserDto>().Failed("User was not found", userDto);
+            }
+
+            if (!ValidatePasswordHash(user, userDto.Password))
+            {
+                return new ActionWrapper<UserDto>().Failed("Login details are invalid", userDto);
+            }
+
+            return new ActionWrapper<UserDto>().Success("Login was successful", userDto);
+        }
+
+        private static bool ValidatePasswordHash(User user, string password)
+        {
+            var hmac = new HMACSHA512(user.PasswordSalt);
+
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+            return computedHash.SequenceEqual(user.PasswordHash);
         }
     }
 }

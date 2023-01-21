@@ -1,4 +1,4 @@
-﻿namespace SimpleBlog.models
+﻿namespace SimpleBlog.Entities
 {
     public class Post
     {
@@ -15,5 +15,5 @@
         public DateTime Updated { get; set; }
 
         public DateTime Deleted { get; set; }
-    }   
+    }
 }

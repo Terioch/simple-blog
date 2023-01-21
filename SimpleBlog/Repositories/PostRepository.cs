@@ -1,5 +1,5 @@
 ﻿using SimpleBlog.Contexts;
-using SimpleBlog.models;
+using SimpleBlog.Entities;
 
 namespace SimpleBlog.Repositories
 {

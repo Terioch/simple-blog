@@ -18,16 +18,16 @@ namespace SimpleBlog.Controllers
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserDto userDto)
-        {
-            await _authService.NewUser(userDto);
-
-            return Ok();
+        {            
+            var result = await _authService.NewUser(userDto);
+            return Ok(result);            
         }
 
         [HttpPost("login")]
-        public IActionResult Login()
+        public IActionResult Login(UserDto userDto)
         {
-            return Ok();
+            var result = _authService.AuthenticateUser(userDto);
+            return Ok(result);
         }
     }
 }

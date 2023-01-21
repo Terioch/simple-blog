@@ -6,13 +6,11 @@ class Post {
   async onInit() {
     const id = window.location.href.split("?")[1].split("=")[1];
     const post = await this.getPost(id);
-    console.log(post);
     this.setPostContent(post);
   }
 
   async getPost(id) {
-    const response = await fetch(`https://localhost:7133/api/post/${id}`);
-    console.log(response);
+    const response = await fetch(`https://localhost:7256/api/post/${id}`);
     const post = await response.json();
     return post;
   }

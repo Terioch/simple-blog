@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SimpleBlog.models;
-using SimpleBlog.Repositories;
+using SimpleBlog.Entities;
 using SimpleBlog.Services;
 
 namespace SimpleBlog.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PostController : ControllerBase
     {
         private readonly IPostService _postService;

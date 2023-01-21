@@ -1,4 +1,4 @@
-﻿namespace SimpleBlog.Models
+﻿namespace SimpleBlog.Entities
 {
     public class User
     {

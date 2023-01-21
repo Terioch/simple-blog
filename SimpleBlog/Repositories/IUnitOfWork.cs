@@ -1,5 +1,4 @@
-﻿using SimpleBlog.models;
-using SimpleBlog.Models;
+﻿using SimpleBlog.Entities;
 
 namespace SimpleBlog.Repositories
 {
