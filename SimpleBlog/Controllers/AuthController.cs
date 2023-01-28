@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimpleBlog.Dtos;
 using SimpleBlog.Services;
@@ -6,7 +6,7 @@ using SimpleBlog.Services;
 namespace SimpleBlog.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController]    
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;

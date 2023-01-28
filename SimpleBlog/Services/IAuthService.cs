@@ -5,8 +5,8 @@ namespace SimpleBlog.Services
 {
     public interface IAuthService
     {
-        Task<ActionWrapper<UserDto>> NewUser(UserDto userDto);
+        Task<ActionWrapper<AuthResult>> NewUser(UserDto userDto);
 
-        ActionWrapper<UserDto> AuthenticateUser(UserDto userDto);
+        ActionWrapper<AuthResult> AuthenticateUser(UserDto userDto);
     }
 }

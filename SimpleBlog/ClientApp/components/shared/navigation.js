@@ -11,6 +11,10 @@ class Navigation {
     document
       .getElementById("registerForm")
       .addEventListener("submit", this.register.bind(this));
+
+    document
+      .getElementById("loginForm")
+      .addEventListener("submit", this.login.bind(this));
   }
 
   async searchPosts(e) {
@@ -39,6 +43,41 @@ class Navigation {
 
     const result = await response.json();
     console.log(result);
+    this.storeAuthDetails(result.payload);
+    this.redirectToHome();
+  }
+
+  async login(e) {
+    e.preventDefault();
+
+    const email = e.target["loginEmailInput"].value;
+    const password = e.target["loginPasswordInput"].value;
+
+    const userDto = {
+      email,
+      password,
+    };
+    console.log(userDto);
+    const response = await fetch(`https://localhost:7256/api/auth/login`, {
+      method: "POST",
+      body: JSON.stringify(userDto),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const result = await response.json();
+    console.log(result);
+    this.storeAuthDetails(result.payload);
+    this.redirectToHome();
+  }
+
+  storeAuthDetails(payload) {
+    localStorage.setItem("user-info", JSON.stringify(payload.userDto));
+    localStorage.setItem("access-token", JSON.stringify(payload.accessToken));
+    localStorage.setItem("expires", JSON.stringify(payload.expires));
+  }
+
+  redirectToHome() {
+    window.location.href = "/";
   }
 }
 

@@ -5,7 +5,7 @@ using SimpleBlog.Services;
 namespace SimpleBlog.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]")]    
     public class PostController : ControllerBase
     {
         private readonly IPostService _postService;

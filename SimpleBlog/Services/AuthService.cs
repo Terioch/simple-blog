@@ -1,7 +1,10 @@
-﻿using SimpleBlog.Dtos;
+﻿using Microsoft.IdentityModel.Tokens;
+using SimpleBlog.Dtos;
 using SimpleBlog.Entities;
 using SimpleBlog.Models;
 using SimpleBlog.Repositories;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -10,13 +13,15 @@ namespace SimpleBlog.Services
     public class AuthService : IAuthService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
 
-        public AuthService(IUnitOfWork unitOfWork)
+        public AuthService(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
 
-        public async Task<ActionWrapper<UserDto>> NewUser(UserDto userDto)
+        public async Task<ActionWrapper<AuthResult>> NewUser(UserDto userDto)
         {
             (byte[] passwordSalt, byte[] passwordHash) = GeneratePasswordHash(userDto.Password);
 
@@ -32,7 +37,9 @@ namespace SimpleBlog.Services
 
             await _unitOfWork.Complete();
 
-            return new ActionWrapper<UserDto>().Success("Registration was successful", userDto);
+            var result = GenerateAccessToken(user);
+
+            return new ActionWrapper<AuthResult>().Success("Registration was successful", result);
         }
 
         private static (byte[], byte[]) GeneratePasswordHash(string password)
@@ -46,21 +53,23 @@ namespace SimpleBlog.Services
             return (passwordSalt, passwordHash);
         }
 
-        public ActionWrapper<UserDto> AuthenticateUser(UserDto userDto)
+        public ActionWrapper<AuthResult> AuthenticateUser(UserDto userDto)
         {
             var user = _unitOfWork.Users.GetAll(x => x.Email == userDto.Email).FirstOrDefault();
 
             if (user == null)
             {
-                return new ActionWrapper<UserDto>().Failed("User was not found", userDto);
+                return new ActionWrapper<AuthResult>().Failed("User was not found", null);
             }
 
             if (!ValidatePasswordHash(user, userDto.Password))
             {
-                return new ActionWrapper<UserDto>().Failed("Login details are invalid", userDto);
+                return new ActionWrapper<AuthResult>().Failed("Login details are invalid", null);
             }
 
-            return new ActionWrapper<UserDto>().Success("Login was successful", userDto);
+            var result = GenerateAccessToken(user);
+
+            return new ActionWrapper<AuthResult>().Success("Login was successful", result);
         }
 
         private static bool ValidatePasswordHash(User user, string password)
@@ -70,6 +79,33 @@ namespace SimpleBlog.Services
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
             return computedHash.SequenceEqual(user.PasswordHash);
+        }
+
+        private AuthResult GenerateAccessToken(User user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email, user.Email)                
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecretKey"]));
+
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var expires = DateTime.UtcNow.AddMinutes(1);
+
+            var token = new JwtSecurityToken(null, null, claims, null, expires, credentials);
+
+            return new AuthResult
+            {
+                UserDto = new UserDto 
+                { 
+                    UserName = user.UserName,
+                    Email = user.Email,
+                },
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                Expires = expires
+            };
         }
     }
 }
