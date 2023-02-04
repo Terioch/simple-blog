@@ -77,7 +77,7 @@ class Navigation {
   }
 
   redirectToHome() {
-    window.location.href = "/";
+    window.location.href = "/home.php";
   }
 }
 

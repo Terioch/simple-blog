@@ -92,7 +92,7 @@ namespace SimpleBlog.Services
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            var expires = DateTime.UtcNow.AddMinutes(1);
+            var expires = DateTime.UtcNow.AddMinutes(10);
 
             var token = new JwtSecurityToken(null, null, claims, null, expires, credentials);
 
@@ -100,6 +100,7 @@ namespace SimpleBlog.Services
             {
                 UserDto = new UserDto 
                 { 
+                    Id = user.Id,
                     UserName = user.UserName,
                     Email = user.Email,
                 },

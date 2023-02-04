@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="./styles/global.css" /> 
 </head>
 <body>
-  <?php include("../shared/navigation.php"); ?>
+  <?php include("../shared/adminNavigation.php"); ?>
 
   <main class="main">
   <div class="container mt-4">
