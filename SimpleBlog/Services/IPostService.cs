@@ -1,4 +1,6 @@
-﻿using SimpleBlog.Entities;
+﻿using SimpleBlog.Dtos;
+using SimpleBlog.Entities;
+using SimpleBlog.Models;
 
 namespace SimpleBlog.Services
 {
@@ -8,6 +10,6 @@ namespace SimpleBlog.Services
 
         Task<Post> GetPost(int id);
 
-        Task<Post> NewPost(Post post);
+        Task<ActionWrapper<PostDto>> NewPost(PostDto postDto);
     }
 }

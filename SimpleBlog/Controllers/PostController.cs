@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SimpleBlog.Entities;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SimpleBlog.Dtos;
 using SimpleBlog.Services;
 
 namespace SimpleBlog.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]    
+    [Route("api/[controller]")]     
     public class PostController : ControllerBase
     {
         private readonly IPostService _postService;
@@ -30,10 +31,11 @@ namespace SimpleBlog.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> NewPost([FromBody] Post model)
+        [Authorize]
+        public async Task<IActionResult> NewPost([FromForm] PostDto postDto)
         {
-            var post = await _postService.NewPost(model);
-            return Ok(post);
+            var result = await _postService.NewPost(postDto);
+            return Ok(result);
         }
     }
 }

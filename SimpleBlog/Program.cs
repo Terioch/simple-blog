@@ -19,6 +19,7 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<IImageService, ImageService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>

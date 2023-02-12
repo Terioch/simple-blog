@@ -18,7 +18,10 @@ class NewPost {
     const content = e.target["contentInput"].value;
     const image = e.target["imageInput"].files[0];
 
+    const userInfo = JSON.parse(localStorage.getItem("user-info"));
+
     const postDto = {
+      userId: userInfo.id,
       title,
       excerpt,
       content,
@@ -39,7 +42,7 @@ class NewPost {
     // formData.append("excerpt", postDto.excerpt);
     // formData.append("content", postDto.content);
 
-    const response = await fetch("https://localhost:7133/api/post/create", {
+    const response = await fetch("https://localhost:7256/api/post/create", {
       method: "POST",
       body: formData,
     });
